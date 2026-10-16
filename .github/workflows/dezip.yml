@@ -2,6 +2,7 @@ name: Dezipper le code
 on: workflow_dispatch
 permissions:
   contents: write
+  workflows: write
 jobs:
   unzip:
     runs-on: ubuntu-latest
