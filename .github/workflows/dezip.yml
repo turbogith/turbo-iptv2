@@ -9,9 +9,18 @@ jobs:
       - uses: actions/checkout@v4
       - name: Dezipper et ranger
         run: |
-          unzip -q TURBO-IPTV-0.14.8.zip -d /tmp/code
-          cp -r /tmp/code/TURBO-IPTV/. .
-          rm -f TURBO-IPTV-0.14.8.zip
+          echo "=== fichiers a la racine ==="
+          ls -la
+          ZIP=$(ls *.zip | head -n 1)
+          echo "ZIP trouve : $ZIP"
+          rm -rf /tmp/code && mkdir -p /tmp/code
+          unzip -o "$ZIP" -d /tmp/code
+          echo "=== contenu deballe ==="
+          ls /tmp/code
+          TOP=$(ls /tmp/code | head -n 1)
+          echo "Dossier : $TOP"
+          cp -r "/tmp/code/$TOP/." .
+          rm -f "$ZIP"
       - name: Commit du code
         run: |
           git config user.name "github-actions"
