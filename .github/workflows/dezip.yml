@@ -1,0 +1,21 @@
+name: Dezipper le code
+on: workflow_dispatch
+permissions:
+  contents: write
+jobs:
+  unzip:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Dezipper et ranger
+        run: |
+          unzip -q TURBO-IPTV-0.14.8.zip -d /tmp/code
+          cp -r /tmp/code/TURBO-IPTV/. .
+          rm -f TURBO-IPTV-0.14.8.zip
+      - name: Commit du code
+        run: |
+          git config user.name "github-actions"
+          git config user.email "github-actions@github.com"
+          git add -A
+          git commit -m "TURBO IPTV source" || echo "rien a commiter"
+          git push
